@@ -1,0 +1,7 @@
+{
+  "name": "CodeWeek",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
