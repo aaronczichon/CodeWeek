@@ -1,8 +1,8 @@
 {
-  "name": "CodeWeek",
+  "name": "codeweek",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "Aaron Czichon",
+  "homepage": "https://aaronczichon.de/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
