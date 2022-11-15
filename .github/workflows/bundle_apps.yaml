@@ -46,6 +46,7 @@ jobs:
       - run: npm i
       - run: npx trapeze run trapeze.yaml -y --android-project android
       - run: npm run build
+      - run: npx cap sync android
       - uses: sparkfabrik/android-build-action@v1.2.0
         with:
           project-path: android
