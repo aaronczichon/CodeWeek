@@ -1,0 +1,17 @@
+vars:
+  GITHUB_RUN_NUMBER:
+    default: 1
+  PACKAGE_NAME:
+    default: com.aaronczichon.codeweek
+
+platforms:
+  ios:
+    version: 1.0.0
+    targets:
+      App:
+        buildNumber: $GITHUB_RUN_NUMBER
+        bundleId: $PACKAGE_NAME
+  android:
+    packageName: $PACKAGE_NAME
+    versionName: 1.0.0
+    versionCode: $GITHUB_RUN_NUMBER

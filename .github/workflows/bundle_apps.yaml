@@ -1,0 +1,57 @@
+name: Bundle Apps
+
+on:
+  push:
+    branches:
+      - "feat/conference-process"
+
+jobs:
+  bundle-ios-app:
+    name: Build & Bundle iOS App
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npm i
+      - run: npx trapeze run trapeze.yaml -y --ios-project ios/App
+      - run: npm run build
+      - run: npx cap sync ios
+      - uses: yukiarrr/ios-build-action@v1.5.0
+        with:
+          project-path: "ios/App/App.xcodeproj"
+          p12-key-base64: ${{ secrets.P12_KEY_BASE64 }}
+          p12-cer-base64: ${{ secrets.P12_BASE64 }}
+          certificate-password: ${{ secrets.P12_CER_PASSWORD }}
+          mobileprovision-base64: ${{ secrets.PROVISIONING_PROFILE }}
+          code-signing-identity: ${{ secrets.CODE_SIGNING_IDENTITY }}
+          team-id: ${{ secrets.TEAM_ID }}
+          workspace-path: "ios/App/App.xcworkspace"
+          export-method: app-store
+          configuration: Release
+          output-path: App.ipa
+      - uses: actions/upload-artifact@v3
+        with:
+          name: iOS.ipa
+          path: App.ipa
+  bundle-android-app:
+    name: Build & Bundle Android App
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npm i
+      - run: npx trapeze run trapeze.yaml -y --android-project android
+      - run: npm run build
+      - uses: sparkfabrik/android-build-action@v1.2.0
+        with:
+          project-path: android
+          build-type: assemble
+          out-path: App.apk
+      - uses: actions/upload-artifact@v3
+        with:
+          name: App.apk
+          path: App.apk
