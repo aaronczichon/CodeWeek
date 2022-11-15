@@ -51,7 +51,7 @@ jobs:
         with:
           project-path: android
           build-type: assemble
-          out-path: App.apk
+          output-path: App.apk
       - uses: actions/upload-artifact@v3
         with:
           name: App.apk
